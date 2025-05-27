@@ -1,0 +1,54 @@
+#lang racket
+(provide parse-coefs
+         sumar-polinomios
+         multiplicar-polinomios
+         derivar
+         formatear-polinomio)
+
+;; Conversión de string a lista de coeficientes
+(define (parse-coefs str)
+  (map string->number (string-split str ",")))
+
+;; Suma de polinomios
+(define (sumar-polinomios p1 p2)
+  (cond
+    [(empty? p1) p2]
+    [(empty? p2) p1]
+    [else (cons (+ (car p1) (car p2)) (sumar-polinomios (cdr p1) (cdr p2)))]))
+
+;; Agregar ceros (función auxiliar)
+(define (agregar-ceros p n)
+  (if (= n 0)
+      p
+      (cons 0 (agregar-ceros p (- n 1)))))
+
+;; Multiplicar coeficiente por polinomio
+(define (multiplicar-coef-polinomio coef p)
+  (map (lambda (x) (* coef x)) p))
+
+;; Multiplicar polinomios
+(define (multiplicar-polinomios p1 p2)
+  (if (empty? p1)
+      '()
+      (sumar-polinomios
+       (agregar-ceros (multiplicar-coef-polinomio (car p1) p2) 0)
+       (agregar-ceros (multiplicar-polinomios (cdr p1) p2) 1))))
+
+;; Derivar polinomio
+(define (derivar pol)
+  (define (derivar-aux pol grado)
+    (cond
+      [(empty? pol) '()]
+      [(= grado 0) (derivar-aux (rest pol) 1)]
+      [else (cons (* grado (first pol))
+                  (derivar-aux (rest pol) (+ grado 1)))]))
+  (derivar-aux pol 0))
+
+;; Formatear polinomio para salida
+(define (formatear-polinomio p)
+  (define (aux p n)
+    (if (empty? p)
+        '()
+        (cons (list (car p) 'x n)
+              (aux (cdr p) (+ n 1)))))
+  (aux p 0))
