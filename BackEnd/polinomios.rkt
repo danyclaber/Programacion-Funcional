@@ -5,6 +5,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide sumar-polinomios
+         restar-polinomios
          multiplicar-polinomios
          derivar)
 
@@ -21,6 +22,31 @@
     [else                                        ; Sumar elemento a elemento
      (cons (+ (car p1) (car p2))
            (sumar-polinomios (cdr p1) (cdr p2)))]))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Función: restar-polinomios
+;; Descripción: Resta dos polinomios representados como listas de coeficientes.
+;; Ejemplo: '(5 4 3) - '(1 2) → '(4 2 3)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (restar-polinomios p1 p2)
+  (cond
+    [(empty? p1) (negar-polinomio p2)]          ; 0 - p2
+    [(empty? p2) p1]                            ; p1 - 0
+    [else
+     (cons (- (car p1) (car p2))
+           (restar-polinomios (cdr p1) (cdr p2)))]))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Función: negar-polinomio
+;; Descripción: Cambia el signo de todos los coeficientes de un polinomio.
+;; Ejemplo: '(3 -2 1) → '(-3 2 -1)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(define (negar-polinomio p)
+  (if (empty? p)
+      '()
+      (cons (- (car p)) (negar-polinomio (cdr p)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Función: agregar-ceros
@@ -59,7 +85,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Función: derivar
 ;; Descripción: Deriva un polinomio dado como lista de coeficientes.
-;; Ejemplo: '(5 3 2) representa 5 + 3x + 2x², su derivada es 3 + 4x → '(3 4)
+;; Ejemplo: '(5 3 2) representa 5 + 3x + 2x2, su derivada es 3 + 4x → '(3 4)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define (derivar pol)

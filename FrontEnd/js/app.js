@@ -42,7 +42,7 @@ function operar(accion) {
         alert("Por favor ingresa el polinomio 2 para derivar");
         return;
     }
-    if ((accion === 'sumar' || accion === 'multiplicar') && (!p1 || !p2)) {
+   if ((accion === 'sumar' || accion === 'multiplicar' || accion === 'restar') && (!p1 || !p2)) {
         alert("Por favor ingresa ambos polinomios");
         return;
     }
@@ -59,7 +59,7 @@ function operar(accion) {
         params.append('accion', 'derivar');
         params.append('polinomio', 'p2');
     } else {
-        // Para sumar y multiplicar se envían ambos y la acción
+        // Para sumar, restar y multiplicar se envían ambos y la acción
         if (p1) params.append('p1', p1);
         if (p2) params.append('p2', p2);
         params.append('accion', accion);

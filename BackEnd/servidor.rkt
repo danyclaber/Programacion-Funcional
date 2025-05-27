@@ -33,6 +33,7 @@
   (define resultado
     (cond
       [(equal? accion "sumar") (sumar-polinomios p1 p2)]
+      [(equal? accion "restar") (restar-polinomios p1 p2)]
       [(equal? accion "multiplicar") (multiplicar-polinomios p1 p2)]
       [(equal? accion "derivar")
        (cond
